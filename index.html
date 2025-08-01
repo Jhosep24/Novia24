@@ -487,7 +487,7 @@
     const music = document.getElementById('bg-music');
     const toggleBtn = document.getElementById('toggle-music');
 
-    // Intentar reproducir automáticamente
+    // Intentar autoplay al cargar
     window.addEventListener('DOMContentLoaded', () => {
         music.play().then(() => {
             toggleBtn.textContent = '⏸️ Pausar música';
@@ -496,7 +496,20 @@
         });
     });
 
-    // Botón para pausar o reproducir
+    // Si el navegador bloqueó el autoplay, inicia al primer toque en cualquier parte
+    const startMusicOnTouch = () => {
+        if (music.paused) {
+            music.play();
+            toggleBtn.textContent = '⏸️ Pausar música';
+        }
+        document.removeEventListener('click', startMusicOnTouch);
+        document.removeEventListener('touchstart', startMusicOnTouch);
+    };
+
+    document.addEventListener('click', startMusicOnTouch);
+    document.addEventListener('touchstart', startMusicOnTouch);
+
+    // Botón para pausar o reanudar
     toggleBtn.addEventListener('click', () => {
         if (music.paused) {
             music.play();
@@ -507,6 +520,7 @@
         }
     });
 </script>
+
 
     
     <script>
