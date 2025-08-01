@@ -423,6 +423,36 @@
     }
 }
 
+        .small-hint {
+    font-size: 13px;
+    color: #d63384;
+    font-family: 'Segoe UI', cursive;
+    text-align: center;
+    margin-top: 10px;
+    animation: fadeInHint 1.5s ease-in-out;
+    opacity: 0.8;
+}
+
+/* Animación de aparición suave */
+@keyframes fadeInHint {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 0.8;
+        transform: translateY(0);
+    }
+}
+
+/* Estilo responsive */
+@media (max-width: 480px) {
+    .small-hint {
+        font-size: 12px;
+        margin-top: 8px;
+    }
+}
+
 
     </style>
 </head>
@@ -439,8 +469,9 @@
     Tu navegador no soporta la reproducción de audio.
 </audio>
 
+<button id="toggle-music" class="music-btn">▶️ Reproducir música</button>
+<p class="small-hint">🎵 Toca el botón para activar la música</p>
 
-<button id="toggle-music" class="music-btn">🔊 Música: Activada</button>
 
         
         <div class="message">
@@ -487,7 +518,7 @@
     const music = document.getElementById('bg-music');
     const toggleBtn = document.getElementById('toggle-music');
 
-    // Intentar autoplay al cargar
+    // Intentar reproducir automáticamente
     window.addEventListener('DOMContentLoaded', () => {
         music.play().then(() => {
             toggleBtn.textContent = '⏸️ Pausar música';
@@ -496,20 +527,7 @@
         });
     });
 
-    // Si el navegador bloqueó el autoplay, inicia al primer toque en cualquier parte
-    const startMusicOnTouch = () => {
-        if (music.paused) {
-            music.play();
-            toggleBtn.textContent = '⏸️ Pausar música';
-        }
-        document.removeEventListener('click', startMusicOnTouch);
-        document.removeEventListener('touchstart', startMusicOnTouch);
-    };
-
-    document.addEventListener('click', startMusicOnTouch);
-    document.addEventListener('touchstart', startMusicOnTouch);
-
-    // Botón para pausar o reanudar
+    // Botón para pausar o reproducir
     toggleBtn.addEventListener('click', () => {
         if (music.paused) {
             music.play();
@@ -520,6 +538,7 @@
         }
     });
 </script>
+
 
 
     
