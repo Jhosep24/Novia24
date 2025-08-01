@@ -387,7 +387,7 @@
     background-color: #ffe4ec;
     border: 1px solid #ff69b4;
     color: #d63384;
-    padding: 8px 16px;
+    padding: 10px 18px;
     border-radius: 25px;
     font-family: 'Segoe UI', cursive;
     cursor: pointer;
@@ -397,13 +397,33 @@
     z-index: 999;
     box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
     transition: all 0.3s ease;
+    font-size: 14px;
 }
 
+/* Hover */
 .music-btn:hover {
     background-color: #ffb6c1;
     color: white;
 }
 
+/* Responsive */
+@media (max-width: 768px) {
+    .music-btn {
+        padding: 8px 14px;
+        font-size: 13px;
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .music-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        bottom: 12px;
+        right: 12px;
+    }
+}
 
     </style>
 </head>
@@ -463,10 +483,19 @@
         </div>
     </div>
 
-    <script>
+<script>
     const music = document.getElementById('bg-music');
     const toggleBtn = document.getElementById('toggle-music');
 
+    // Intentar reproducir la música al cargar
+    window.addEventListener('DOMContentLoaded', () => {
+        music.play().catch(() => {
+            // Si el navegador bloquea autoplay
+            toggleBtn.textContent = '🔇 Pulsa para activar música';
+        });
+    });
+
+    // Botón para pausar o reanudar
     toggleBtn.addEventListener('click', () => {
         if (music.paused) {
             music.play();
